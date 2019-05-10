@@ -12,7 +12,7 @@ import bookmall.vo.BookVo;
 
 public class BookDao {
 	
-	public Boolean insert(String title, Long price, Long categoryNo) {
+	public Boolean insert(BookVo vo) {
 		Boolean result = false;
 		
 		Connection conn = null;
@@ -24,9 +24,9 @@ public class BookDao {
 			String sql = "insert into book values(null, ?, ?, ?);";
 			pstmt = conn.prepareStatement(sql);
 			
-			pstmt.setString(1, title);
-			pstmt.setLong(2, price);
-			pstmt.setLong(3, categoryNo);
+			pstmt.setString(1, vo.getTitle());
+			pstmt.setLong(2, vo.getPrice());
+			pstmt.setLong(3, vo.getCategoryNo());
 			
 			int count = pstmt.executeUpdate();
 			result = (count == 1);
@@ -48,7 +48,7 @@ public class BookDao {
 	}
 
 	// 책 이름 변경
-	public Boolean update(Long no, String title) {
+	public Boolean updateTitle(BookVo vo) {
 		Boolean result = false;
 		
 		Connection conn = null;
@@ -60,8 +60,8 @@ public class BookDao {
 			String sql = "update book set title=? where no=?";
 			pstmt = conn.prepareStatement(sql);
 
-			pstmt.setString(1, title);
-			pstmt.setLong(2, no);
+			pstmt.setString(1, vo.getTitle());
+			pstmt.setLong(2, vo.getNo());
 			
 			int count = pstmt.executeUpdate();
 			result = (count == 1);
@@ -83,7 +83,7 @@ public class BookDao {
 	}
 
 	// 책 가격 변경
-	public Boolean update(Long no, Long price) {
+	public Boolean updatePrice(BookVo vo) {
 		Boolean result = false;
 		
 		Connection conn = null;
@@ -95,8 +95,8 @@ public class BookDao {
 			String sql = "update book set price=? where no=?";
 			pstmt = conn.prepareStatement(sql);
 
-			pstmt.setLong(1, price);
-			pstmt.setLong(2, no);
+			pstmt.setLong(1, vo.getPrice());
+			pstmt.setLong(2, vo.getNo());
 			
 			int count = pstmt.executeUpdate();
 			result = (count == 1);
@@ -119,7 +119,7 @@ public class BookDao {
 	
 	// 책 카테고리 변경은 스킵
 	
-	public Boolean delete(Long no) {
+	public Boolean delete(BookVo vo) {
 		Boolean result = false;
 		
 		Connection conn = null;
@@ -131,7 +131,7 @@ public class BookDao {
 			String sql = "delete from book where no=?";
 			pstmt = conn.prepareStatement(sql);
 			
-			pstmt.setLong(1, no);
+			pstmt.setLong(1, vo.getNo());
 			
 			int count = pstmt.executeUpdate();
 			result = (count == 1);

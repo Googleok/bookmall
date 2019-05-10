@@ -10,25 +10,35 @@ public class BookDaoTest {
 		insert("나미야 잡화점의 기적", 20000L, 1L);
 		insert("한강의 기적", 15000L, 2L);
 		insert("자바의 정석", 30000L, 3L);
-		insert("인문학", 20000L, 4L);
-		insert("경제가 움직인다", 20000L, 5L);
-		insert("다빈치 코드", 20000L, 6L);
-//		update(2L, "낙동강의 기적");
+
+		updateTitle("낙동강의 기적", 2L);
+		updatePrice(50000L, 3L);
+		
 		getListTest();
 	}
 	
 	public static void insert(String title, Long price, Long categoryNo) {
-		new BookDao().insert(title, price, categoryNo);
+		BookVo vo = new BookVo();
+		vo.setTitle(title);
+		vo.setPrice(price);
+		vo.setCategoryNo(categoryNo);
+		new BookDao().insert(vo);
 	}
 	
 	// 책이름 변경
-	public static void update(Long no, String title) {
-		new BookDao().update(no, title);
+	public static void updateTitle(String title, Long no) {
+		BookVo vo = new BookVo();
+		vo.setTitle("낙동강의 기적");
+		vo.setNo(2L);
+		new BookDao().updateTitle(vo);
 	}
 	
 	// 책가격 변경
-	public static void update(Long no, Long price) {
-		new BookDao().update(no, price);
+	public static void updatePrice(Long price, Long no) {
+		BookVo vo = new BookVo();
+		vo.setPrice(price);
+		vo.setNo(no);
+		new BookDao().updatePrice(vo);
 	}	
 	
 	public static void getListTest() {

@@ -7,6 +7,10 @@ public class MemberVo {
 	private String email;
 	private String passwd;
 	
+	public MemberVo() {
+		
+	}
+	
 	public MemberVo(Long no, String name, Long tel, String email, String passwd) {
 		this.no = no;
 		this.name = name;

@@ -7,19 +7,27 @@ import bookmall.vo.CartVo;
 
 public class CartDaoTest {
 	public static void main(String[] args) {
-//		insert(1L, 1L, 2L);
-//		insert(2L, 2L, 3L);
-//		update(2L, 2L, 4L);
-		
-		getListTest(1L);
+		insert(1L, 1L, 2L);
+		insert(2L, 2L, 3L);
+		update(2L, 2L, 4L);
+
+		getListTest(2L);
 	}
 	
-	public static void insert(Long no, Long bookNo, Long totalCount) {
-		new CartDao().insert(no, bookNo, totalCount);
+	public static void insert(Long memberNo, Long bookNo, Long count) {
+		CartVo vo = new CartVo();
+		vo.setMemberNo(memberNo);
+		vo.setBookNo(bookNo);
+		vo.setCount(count);
+		new CartDao().insert(vo);
 	}
 	
-	public static void update(Long no, Long bookNo, Long totalCount) {
-		new CartDao().update(no, bookNo, totalCount);
+	public static void update(Long memberNo, Long bookNo, Long count) {
+		CartVo vo = new CartVo();
+		vo.setMemberNo(memberNo);
+		vo.setBookNo(bookNo);
+		vo.setCount(count);
+		new CartDao().update(vo);
 	}
 	
 	public static void getListTest(Long memberNo) {

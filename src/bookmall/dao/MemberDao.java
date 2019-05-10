@@ -12,7 +12,7 @@ import bookmall.vo.MemberVo;
 
 public class MemberDao {
 	
-	public Boolean insert(String name, Long tel, String email, String passwd) {
+	public Boolean insert(MemberVo vo) {
 		Boolean result = false;
 		
 		Connection conn = null;
@@ -24,10 +24,10 @@ public class MemberDao {
 			String sql = "insert into member values(null, ?, ?, ?, ?);";
 			pstmt = conn.prepareStatement(sql);
 			
-			pstmt.setString(1, name);
-			pstmt.setLong(2, tel);
-			pstmt.setString(3, email);
-			pstmt.setString(4, passwd);
+			pstmt.setString(1, vo.getName());
+			pstmt.setLong(2, vo.getTel());
+			pstmt.setString(3, vo.getEmail());
+			pstmt.setString(4, vo.getPasswd());
 			
 			int count = pstmt.executeUpdate();
 			result = (count == 1);
@@ -49,7 +49,7 @@ public class MemberDao {
 	}
 
 	// 회원 정보 수정
-	public Boolean update(Long no, String name, Long tel, String email, String passwd) {
+	public Boolean update(MemberVo vo) {
 		Boolean result = false;
 		
 		Connection conn = null;
@@ -60,11 +60,11 @@ public class MemberDao {
 			String sql="update member set name=?, tel=?, email=?, passwd=? where no=?";
 			
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setString(1, name);
-			pstmt.setLong(2, tel);
-			pstmt.setString(3, email);
-			pstmt.setString(4, passwd);
-			pstmt.setLong(5, no);
+			pstmt.setString(1, vo.getName());
+			pstmt.setLong(2, vo.getTel());
+			pstmt.setString(3, vo.getEmail());
+			pstmt.setString(4, vo.getPasswd());
+			pstmt.setLong(5, vo.getNo());
 			
 			int count = pstmt.executeUpdate();
 			result = (count == 1);
@@ -85,7 +85,7 @@ public class MemberDao {
 		return result;
 	}
 	
-	public Boolean delete(Long no) {
+	public Boolean delete(MemberVo vo) {
 		Boolean result = false;
 		
 		Connection conn = null;
@@ -97,7 +97,7 @@ public class MemberDao {
 			String sql = "delete from member where no=?";
 			pstmt = conn.prepareStatement(sql);
 			
-			pstmt.setLong(1, no);
+			pstmt.setLong(1, vo.getNo());
 			
 			int count = pstmt.executeUpdate();
 			result = (count == 1);

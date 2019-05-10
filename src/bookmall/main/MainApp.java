@@ -1,6 +1,6 @@
 package bookmall.main;
 
-import java.io.ObjectInputStream.GetField;
+import java.text.Format;
 import java.util.List;
 
 import bookmall.dao.BookDao;
@@ -11,44 +11,77 @@ import bookmall.dao.OrderDao;
 import bookmall.vo.BookVo;
 import bookmall.vo.CartVo;
 import bookmall.vo.CategoryVo;
+import bookmall.vo.MemberVo;
+import bookmall.vo.OrderBookVo;
+import bookmall.vo.OrderVo;
 
 public class MainApp {
-
 	public static void main(String[] args) {
+		getListMember();
+		getListCategory();
+		getListBook();
+		getListCart(1L);
+		getListOrder(2L);
+		getListOrderBook(1L);
+	}
 
-		MemberDao memberDao = new MemberDao();
-		CategoryDao categoryDao = new CategoryDao();
-		BookDao bookDao = new BookDao();
-		CartDao cartDao = new CartDao();
-		OrderDao orderDao = new OrderDao();
-		
-//		memberDao.insert("참내", 76363123L, "thdnjs9570@naver.com", "thdnjs2");
-//		memberDao.insert("자기자랑", 40287755L, "whddjr2225@naver.com", "test1234");
-//		
-//		categoryDao.insert("수필");
-//		categoryDao.insert("소설");
-//		categoryDao.insert("IT");
-//		
-//		bookDao.insert("소나기", 15000L, 2L);
-//		bookDao.insert("엄홍길의 히말라야", 20000L, 1L);
-//		bookDao.insert("자바스크립트 완벽 가이드", 50000L, 3L);
-//		
-//		cartDao.insert(1L, 2L, 3L);
-//		cartDao.insert(1L, 3L, 4L);
-//		
-//		orderDao.insertOrder(45000L, "서울시", 1L, 3L, 2L);
-//		
-		// 리스트 뽑아내기
-//		memberDao.getList();
-//		categoryDao.getList();
-//		bookDao.getList();
-//		cartDao.getList(1L);
-//		orderDao.getOrderList(1L);
-//		orderDao.getOrderBookList(1L);
-//		orderDao.getOrderListCount("20190510");
-		
-		
+	//멤버 리스트
+	public static void getListMember() {
+		MemberDao dao = new MemberDao();
+		List<MemberVo> list = dao.getList();
+		System.out.println("*******회원리스트*******");
+		for(MemberVo vo : list) {
+			System.out.println("이름 : "+vo.getName()+", 전화번호 : "+ vo.getTel() + ", 이메일 : "+ vo.getEmail());
+		}
 	}
 	
+	//카테고리리스트
+	public static void getListCategory() {
+		CategoryDao dao = new CategoryDao();
+		List<CategoryVo> list = dao.getList();
+		System.out.println("*******카테고리 리스트*******");
+		for(CategoryVo vo : list) {
+			System.out.println("도서 장르 : "+vo.getName());
+		}
+	}
+	// 책 리스트
+	public static void getListBook() {
+		BookDao dao = new BookDao();
+		List<BookVo> list = dao.getList();
+		System.out.println("*******도서 리스트*******");
+		for(BookVo vo : list) {
+			System.out.println("제목 : "+vo.getTitle()+", 가격 : "+ vo.getPrice() + "원, 카테고리넘버 : "+ vo.getCategoryName());
+		}
+	}
+	
+	// 카트 리스트
+	public static void getListCart(Long memberNo) {
+		CartDao dao = new CartDao();
+		List<CartVo> list = dao.getList(memberNo);
+		System.out.println("*******카트 리스트*******");
+		for(CartVo vo : list) {
+			System.out.println("이름 : "+vo.getMemberName()+", 제목 : "+ vo.getTitle() + ", 수량 : "+ vo.getCount());
+		}
+	}
+	
+	//주문리스트
+	public static void getListOrder(Long memberNo) {
+		OrderDao dao = new OrderDao();
+		List<OrderVo> list = dao.getOrderList(memberNo);
+		System.out.println("*******주문 리스트*******");
+		for(OrderVo vo : list) {
+			System.out.println("이름 : "+vo.getName()+", 가격 : "+ vo.getPrice() + ", 이메일 : "+ vo.getEmail()+", 주소 : "+vo.getReceiveAddress());
+		}
+	}
+	
+	// 주문 도서리스트
+	public static void getListOrderBook(Long ordersNo) {
+		OrderDao dao = new OrderDao();
+		List<OrderBookVo> list = dao.getOrderBookList(ordersNo);
+		System.out.println("*******주문 도서 리스트*******");
+		for(OrderBookVo vo : list) {
+			System.out.println("도서 제목 : "+vo.getTitle()+", 수량 : "+ vo.getCount() + ", 가격 : "+ vo.getPrice());
+		}
+	}
 
 }

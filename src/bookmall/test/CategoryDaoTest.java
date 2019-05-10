@@ -10,19 +10,22 @@ public class CategoryDaoTest {
 		insert("소설");
 		insert("수필");
 		insert("컴퓨터/IT");
-		insert("인문");
-		insert("경제");
-		insert("예술");
+		
 //		update(2L, "만화");
 		getListTest();
 	}
 	
 	public static void insert(String categoryName) {
-		new CategoryDao().insert(categoryName);
+		CategoryVo vo = new CategoryVo();
+		vo.setName(categoryName);
+		new CategoryDao().insert(vo);
 	}
 	
 	public static void update(Long no, String categoryName) {
-		new CategoryDao().update(no, categoryName);
+		CategoryVo vo = new CategoryVo();
+		vo.setNo(no);
+		vo.setName(categoryName);
+		new CategoryDao().update(vo);
 	}
 	
 	

@@ -17,11 +17,7 @@ import bookmall.vo.OrderVo;
 
 public class OrderDao {
 	
-	private int tmpMemberPK = 0;
-	private Long memberPK = 0L;
-	
-	
-	public Boolean insertOrder(Long price, String receiveAddress, Long memberNo, Long totalCount, Long bookNo) {
+	public Boolean insertOrder(OrderVo vo) {
 		Boolean result = false;
 		
 		Connection conn = null;
@@ -33,9 +29,9 @@ public class OrderDao {
 			String sql = "insert into orders values(null, ?, ?, ?, date_format(now(), '%Y%m%d'))";
 			pstmt = conn.prepareStatement(sql);
 			
-			pstmt.setLong(1, price);
-			pstmt.setString(2, receiveAddress);
-			pstmt.setLong(3, memberNo);
+			pstmt.setLong(1, vo.getPrice());
+			pstmt.setString(2, vo.getReceiveAddress());
+			pstmt.setLong(3, vo.getMemberNo());
 			
 			int count = pstmt.executeUpdate();
 			result = (count == 1);
@@ -44,10 +40,10 @@ public class OrderDao {
 				Statement stmt = conn.createStatement();
 				ResultSet rs = stmt.executeQuery("select last_insert_id()");
 				if(rs.next()) {
-					tmpMemberPK = rs.getInt(1);
-					memberPK = (long) tmpMemberPK;
+					Long orderNo = 0L;
+					orderNo = (long) rs.getInt(1);
+					vo.setNo(orderNo);
 				}
-				insertOrderBook(totalCount, memberPK, bookNo);
 			}
 		} catch (SQLException e) {
 			System.out.println("error" + e);
@@ -66,7 +62,7 @@ public class OrderDao {
 		return result;
 	}
 	
-	public Boolean insertOrderBook(Long totalCount, Long orderNo, Long bookNo) {
+	public Boolean insertOrderBook(OrderBookVo vo) {
 		Boolean result = false;
 		
 		Connection conn = null;
@@ -78,9 +74,9 @@ public class OrderDao {
 			String sql = "insert into order_book values(null, ?, ?, ?)";
 			pstmt = conn.prepareStatement(sql);
 			
-			pstmt.setLong(1, totalCount);
-			pstmt.setLong(2, orderNo);
-			pstmt.setLong(3, bookNo);
+			pstmt.setLong(1, vo.getCount());
+			pstmt.setLong(2, vo.getOrderNo());
+			pstmt.setLong(3, vo.getBookNo());
 			
 			int count = pstmt.executeUpdate();
 			result = (count == 1);

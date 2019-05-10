@@ -12,7 +12,7 @@ import bookmall.vo.CategoryVo;
 
 public class CategoryDao {
 	
-	public Boolean insert(String categoryName) {
+	public Boolean insert(CategoryVo vo) {
 		Boolean result = false;
 		
 		Connection conn = null;
@@ -24,7 +24,7 @@ public class CategoryDao {
 			String sql = "insert into category values(null, ?);";
 			pstmt = conn.prepareStatement(sql);
 			
-			pstmt.setString(1, categoryName);
+			pstmt.setString(1, vo.getName());
 			
 			int count = pstmt.executeUpdate();
 			result = (count == 1);
@@ -46,7 +46,7 @@ public class CategoryDao {
 		return result;
 	}
 
-	public Boolean update(Long no, String categoryName) {
+	public Boolean update(CategoryVo vo) {
 		// 이름 변경
 		Boolean result = false;
 		
@@ -59,8 +59,8 @@ public class CategoryDao {
 			String sql = "update category set name=? where no=?";
 			pstmt = conn.prepareStatement(sql);
 
-			pstmt.setString(1, categoryName);
-			pstmt.setLong(2, no);
+			pstmt.setString(1, vo.getName());
+			pstmt.setLong(2, vo.getNo());
 			
 			int count = pstmt.executeUpdate();
 			result = (count == 1);
@@ -81,7 +81,7 @@ public class CategoryDao {
 		return result;
 	}
 	
-	public Boolean delete(Long no) {
+	public Boolean delete(CategoryVo vo) {
 		Boolean result = false;
 		
 		Connection conn = null;
@@ -93,7 +93,7 @@ public class CategoryDao {
 			String sql = "delete from category where no=?";
 			pstmt = conn.prepareStatement(sql);
 			
-			pstmt.setLong(1, no);
+			pstmt.setLong(1, vo.getNo());
 			
 			int count = pstmt.executeUpdate();
 			result = (count == 1);

@@ -12,7 +12,7 @@ import bookmall.vo.CartVo;
 
 public class CartDao {
 	
-	public Boolean insert(Long memberNo, Long bookNo, Long totalCount) {
+	public Boolean insert(CartVo vo) {
 		Boolean result = false;
 		
 		Connection conn = null;
@@ -24,9 +24,9 @@ public class CartDao {
 			String sql = "insert into cart values(?, ?, ?)";
 			pstmt = conn.prepareStatement(sql);
 			
-			pstmt.setLong(1, memberNo);
-			pstmt.setLong(2, bookNo);
-			pstmt.setLong(3, totalCount);
+			pstmt.setLong(1, vo.getMemberNo());
+			pstmt.setLong(2, vo.getBookNo());
+			pstmt.setLong(3, vo.getCount());
 			
 			int count = pstmt.executeUpdate();
 			result = (count == 1);
@@ -47,7 +47,7 @@ public class CartDao {
 		return result;
 	}
 
-	public Boolean update(Long memberNo, Long bookNo, Long totalCount) {
+	public Boolean update(CartVo vo) {
 		Boolean result = false;
 		
 		Connection conn = null;
@@ -59,9 +59,9 @@ public class CartDao {
 			String sql = "update cart set count=? where member_no=? and book_no=?";
 			pstmt = conn.prepareStatement(sql);
 
-			pstmt.setLong(1, totalCount);
-			pstmt.setLong(2, memberNo);
-			pstmt.setLong(3, bookNo);
+			pstmt.setLong(1, vo.getCount());
+			pstmt.setLong(2, vo.getMemberNo());
+			pstmt.setLong(3, vo.getBookNo());
 			
 			int count = pstmt.executeUpdate();
 			result = (count == 1);
@@ -82,7 +82,7 @@ public class CartDao {
 		return result;
 	}
 	
-	public Boolean delete(Long memberNo, Long bookNo) {
+	public Boolean delete(CartVo vo) {
 		Boolean result = false;
 		
 		Connection conn = null;
@@ -94,8 +94,8 @@ public class CartDao {
 			String sql = "delete from cart where member_no=? and book_no=?";
 			pstmt = conn.prepareStatement(sql);
 			
-			pstmt.setLong(1, memberNo);
-			pstmt.setLong(2, bookNo);
+			pstmt.setLong(1, vo.getMemberNo());
+			pstmt.setLong(2, vo.getBookNo());
 			
 			int count = pstmt.executeUpdate();
 			result = (count == 1);
