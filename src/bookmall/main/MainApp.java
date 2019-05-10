@@ -1,6 +1,5 @@
 package bookmall.main;
 
-import java.text.Format;
 import java.util.List;
 
 import bookmall.dao.BookDao;
@@ -21,7 +20,7 @@ public class MainApp {
 		getListCategory();
 		getListBook();
 		getListCart(1L);
-		getListOrder(2L);
+		getListOrder(1L);
 		getListOrderBook(1L);
 	}
 
@@ -75,9 +74,9 @@ public class MainApp {
 	}
 	
 	// 주문 도서리스트
-	public static void getListOrderBook(Long ordersNo) {
+	public static void getListOrderBook(Long orderNo) {
 		OrderDao dao = new OrderDao();
-		List<OrderBookVo> list = dao.getOrderBookList(ordersNo);
+		List<OrderBookVo> list = dao.getOrderBookList(orderNo);
 		System.out.println("*******주문 도서 리스트*******");
 		for(OrderBookVo vo : list) {
 			System.out.println("도서 제목 : "+vo.getTitle()+", 수량 : "+ vo.getCount() + ", 가격 : "+ vo.getPrice());
