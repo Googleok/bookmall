@@ -7,12 +7,12 @@ import bookmall.vo.BookVo;
 
 public class BookDaoTest {
 	public static void main(String[] args) {
-//		insert("나미야 잡화점의 기적", 20000L, 1L);
-//		insert("한강의 기적", 15000L, 2L);
-//		insert("자바의 정석", 30000L, 3L);
-//		insert("인문학", 20000L, 4L);
-//		insert("경제가 움직인다", 20000L, 5L);
-//		insert("다빈치 코드", 20000L, 6L);
+		insert("나미야 잡화점의 기적", 20000L, 1L);
+		insert("한강의 기적", 15000L, 2L);
+		insert("자바의 정석", 30000L, 3L);
+		insert("인문학", 20000L, 4L);
+		insert("경제가 움직인다", 20000L, 5L);
+		insert("다빈치 코드", 20000L, 6L);
 //		update(2L, "낙동강의 기적");
 		getListTest();
 	}

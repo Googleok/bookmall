@@ -1,19 +1,21 @@
 package bookmall.vo;
 
 public class CartVo {
-	private Long no;
+	private Long memberNo;
 	private Long bookNo;
 	private Long count;
 
 	private String title;
 	private String memberName;
 	
-	public Long getNo() {
-		return no;
+
+	public Long getMemberNo() {
+		return memberNo;
 	}
-	public void setNo(Long no) {
-		this.no = no;
+	public void setMemberNo(Long memberNo) {
+		this.memberNo = memberNo;
 	}
+	
 	public Long getBookNo() {
 		return bookNo;
 	}
@@ -40,10 +42,8 @@ public class CartVo {
 	}
 	@Override
 	public String toString() {
-		return "CartVo [no=" + no + ", book_no=" + bookNo + ", count=" + count + ", title=" + title + ", memberName="
-				+ memberName + "]";
+		return "CartVo [memberNo=" + memberNo + ", bookNo=" + bookNo + ", count=" + count + ", title=" + title
+				+ ", memberName=" + memberName + "]";
 	}
-	
-	
 	
 }

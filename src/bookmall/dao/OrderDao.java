@@ -6,7 +6,10 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import bookmall.vo.OrderBookVo;
@@ -27,7 +30,7 @@ public class OrderDao {
 		try {
 			conn = getConnection();
 			
-			String sql = "insert into orders values(null, ?, ?, ?)";
+			String sql = "insert into orders values(null, ?, ?, ?, date_format(now(), '%Y%m%d'))";
 			pstmt = conn.prepareStatement(sql);
 			
 			pstmt.setLong(1, price);
@@ -288,6 +291,49 @@ public class OrderDao {
 		return result;
 	}
 	
+	public int getOrderListCount(String date){
+		int result = 0;
+
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
+			conn = getConnection();
+
+			String sql = "select count(a.no)"
+					+ " from orders a, member b "
+					+ " where a.member_no = b.no"
+					+ " and a.order_date=?";
+			pstmt = conn.prepareStatement(sql);
+		
+			pstmt.setDate(1, java.sql.Date.valueOf(getDateTypeChange(date)));
+			
+			rs = pstmt.executeQuery();
+			
+			if ( rs.next() ) {
+				result = rs.getInt(1);
+			}
+			
+		} catch (SQLException e) {
+			System.out.println("error" + e);
+		} finally {
+			try {
+				if( rs != null) {
+					rs.close();
+				}
+				if( pstmt != null) {
+					pstmt.close();
+				}
+				if( conn != null ) {
+					conn.close();
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return result;
+	}
+	
 	private Connection getConnection() throws SQLException{
 		Connection conn = null;
 		try {
@@ -298,5 +344,26 @@ public class OrderDao {
 			System.out.println("Driver Loading failed..." + e);
 		} 
 		return conn;
+	}
+	
+	private Long getOrderID() {
+		
+		SimpleDateFormat format = new SimpleDateFormat("yyyyMMdd");
+		
+		Calendar time = Calendar.getInstance();
+		
+		String format_time = format.format(time.getTime());
+		
+		return null;
+	}
+	
+	private String getDateTypeChange(String date) {
+		String year = date.substring(0, 4);
+		String month = date.substring(4, 6);
+		String day = date.substring(6, 8);
+		
+		String returnDate = year +"-"+ month + "-" + day;
+		
+		return returnDate;
 	}
 }

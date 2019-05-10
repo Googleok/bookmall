@@ -12,7 +12,7 @@ import bookmall.vo.CartVo;
 
 public class CartDao {
 	
-	public Boolean insert(Long no, Long bookNo, Long totalCount) {
+	public Boolean insert(Long memberNo, Long bookNo, Long totalCount) {
 		Boolean result = false;
 		
 		Connection conn = null;
@@ -24,7 +24,7 @@ public class CartDao {
 			String sql = "insert into cart values(?, ?, ?)";
 			pstmt = conn.prepareStatement(sql);
 			
-			pstmt.setLong(1, no);
+			pstmt.setLong(1, memberNo);
 			pstmt.setLong(2, bookNo);
 			pstmt.setLong(3, totalCount);
 			
@@ -47,7 +47,7 @@ public class CartDao {
 		return result;
 	}
 
-	public Boolean update(Long no, Long bookNo, Long totalCount) {
+	public Boolean update(Long memberNo, Long bookNo, Long totalCount) {
 		Boolean result = false;
 		
 		Connection conn = null;
@@ -56,11 +56,11 @@ public class CartDao {
 		try {
 			conn = getConnection();
 			
-			String sql = "update cart set count=? where no=? and book_no=?";
+			String sql = "update cart set count=? where member_no=? and book_no=?";
 			pstmt = conn.prepareStatement(sql);
 
 			pstmt.setLong(1, totalCount);
-			pstmt.setLong(2, no);
+			pstmt.setLong(2, memberNo);
 			pstmt.setLong(3, bookNo);
 			
 			int count = pstmt.executeUpdate();
@@ -82,7 +82,7 @@ public class CartDao {
 		return result;
 	}
 	
-	public Boolean delete(Long no, Long bookNo) {
+	public Boolean delete(Long memberNo, Long bookNo) {
 		Boolean result = false;
 		
 		Connection conn = null;
@@ -91,10 +91,10 @@ public class CartDao {
 		try {
 			conn = getConnection();
 			
-			String sql = "delete from cart where no=? and book_no=?";
+			String sql = "delete from cart where member_no=? and book_no=?";
 			pstmt = conn.prepareStatement(sql);
 			
-			pstmt.setLong(1, no);
+			pstmt.setLong(1, memberNo);
 			pstmt.setLong(2, bookNo);
 			
 			int count = pstmt.executeUpdate();
@@ -125,11 +125,11 @@ public class CartDao {
 		try {
 			conn = getConnection();
 		
-			String sql = "select c.name, b.title, a.count, a.no, a.book_no"
+			String sql = "select c.name, b.title, a.count, a.member_no, a.book_no"
 					+ " from cart a, book b, member c"
-					+ " where a.no = c.no"
+					+ " where a.member_no = c.no"
 					+ " and a.book_no = b.no"
-					+ " and a.no = ?";
+					+ " and a.member_no = ?";
 			pstmt = conn.prepareStatement(sql);
 			
 			pstmt.setLong(1, memberNo);
@@ -140,15 +140,15 @@ public class CartDao {
 				String memberName = rs.getString(1);
 				String title = rs.getString(2);
 				Long count = rs.getLong(3);
-				Long no = rs.getLong(4);
+				Long memberNoFinal = rs.getLong(4);
 				Long bookNo = rs.getLong(5);
 				
 				CartVo vo = new CartVo();
 				vo.setMemberName(memberName);
 				vo.setTitle(title);
 				vo.setCount(count);
-				vo.setNo(no);
 				vo.setBookNo(bookNo);
+				vo.setMemberNo(memberNoFinal);
 				
 				result.add(vo);
 			}

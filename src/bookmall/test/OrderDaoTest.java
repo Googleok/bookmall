@@ -13,9 +13,10 @@ public class OrderDaoTest {
 //		delete(13L);
 //		delete(14L);
 
-//		getOrderListTest(2L);
-		getOrderBookListTest(15L);
+//		getOrderListTest(1L);
+//		getOrderBookListTest(7L);
 		
+		getOrderListCount("20190510");
 	}
 	
 	public static void insert(Long price, String receiveAddress, Long memberNo, Long totalCount, Long bookNo) {
@@ -39,4 +40,10 @@ public class OrderDaoTest {
 			System.out.println(vo);
 		}
 	}
+	
+	public static void getOrderListCount(String date) {
+		System.out.println(new OrderDao().getOrderListCount(date));
+	}
+	
+	
 }
